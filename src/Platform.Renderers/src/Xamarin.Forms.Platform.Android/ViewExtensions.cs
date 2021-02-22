@@ -6,6 +6,7 @@ using Android.OS;
 using Android.Util;
 using Android.Views;
 using AndroidX.Core.Content;
+using Xamarin.Platform;
 using AColor = Android.Graphics.Color;
 using ARect = Android.Graphics.Rect;
 using AView = Android.Views.View;
@@ -81,6 +82,7 @@ namespace Xamarin.Forms.Platform.Android
 			}
 		}
 
+		[PortHandler]
 		public static bool GetClipToOutline(this AView view)
 		{
 			if (view.IsDisposed() || !Forms.IsLollipopOrNewer)
@@ -89,6 +91,7 @@ namespace Xamarin.Forms.Platform.Android
 			return view.ClipToOutline;
 		}
 
+		[PortHandler]
 		public static void SetClipToOutline(this AView view, bool value)
 		{
 			if (view.IsDisposed() || !Forms.IsLollipopOrNewer)

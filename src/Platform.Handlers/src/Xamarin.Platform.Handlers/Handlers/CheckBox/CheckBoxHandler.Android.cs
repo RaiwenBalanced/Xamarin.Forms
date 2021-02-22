@@ -14,6 +14,8 @@ namespace Xamarin.Platform.Handlers
 				SoundEffectsEnabled = false
 			};
 
+			nativeCheckBox.SetClipToOutline(true);
+
 			return nativeCheckBox;
 		}
 

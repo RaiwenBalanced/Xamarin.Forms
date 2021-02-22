@@ -20,5 +20,21 @@ namespace Xamarin.Platform
 			if (!backgroundColor.IsDefault)
 				nativeView?.SetBackgroundColor(backgroundColor.ToNative());
 		}
+
+		public static bool GetClipToOutline(this AView view)
+		{
+			if (!NativeVersion.IsAtLeast(21))
+				return false;
+
+			return view.ClipToOutline;
+		}
+
+		public static void SetClipToOutline(this AView view, bool value)
+		{
+			if (!NativeVersion.IsAtLeast(21))
+				return;
+
+			view.ClipToOutline = value;
+		}
 	}
 }
