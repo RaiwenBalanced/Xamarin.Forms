@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using CoreGraphics;
 using UIKit;
+using Xamarin.Platform;
 
 namespace Xamarin.Forms.Platform.iOS
 {
@@ -121,6 +122,7 @@ namespace Xamarin.Forms.Platform.iOS
 			base.OnElementChanged(e);
 		}
 
+		[PortHandler]
 		protected virtual void UpdateTintColor()
 		{
 			if (Element == null)
@@ -129,6 +131,7 @@ namespace Xamarin.Forms.Platform.iOS
 			Control.CheckBoxTintColor = Element.Color;
 		}
 
+		[PortHandler]
 		void OnControlCheckedChanged(object sender, EventArgs e)
 		{
 			Element.IsChecked = Control.IsChecked;

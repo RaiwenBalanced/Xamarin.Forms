@@ -1,25 +1,26 @@
 ﻿using System;
 using CoreGraphics;
 using UIKit;
-using Xamarin.Platform;
+using Xamarin.Forms;
 
-namespace Xamarin.Forms.Platform.iOS
+namespace Xamarin.Platform
 {
-	[PortHandler]
-	public class FormsCheckBox : UIButton
+	public class NativeCheckBox : UIButton
 	{
-		static UIImage _checked;
-		static UIImage _unchecked;
+		// All these values were chosen to just match the android drawables that are used
+		const float DefaultSize = 18.0f;
+		const float LineWidth = 2.0f;
 
-		// all these values were chosen to just match the android drawables that are used
-		const float _defaultSize = 18.0f;
-		const float _lineWidth = 2.0f;
-		Color  _tintColor;
+		static UIImage? Checked;
+		static UIImage? Unchecked;
+
+		Color _tintColor;
 		bool _isChecked;
 		bool _isEnabled;
 		float _minimumViewSize;
-		public EventHandler CheckedChanged;
 		bool _disposed;
+
+		public EventHandler? CheckedChanged;
 
 		internal float MinimumViewSize
 		{
@@ -27,20 +28,21 @@ namespace Xamarin.Forms.Platform.iOS
 			set
 			{
 				_minimumViewSize = value;
-				var xOffset = (value - _defaultSize + _lineWidth) / 4;
+				var xOffset = (value - DefaultSize + LineWidth) / 4;
 				ContentEdgeInsets = new UIEdgeInsets(0, xOffset, 0, 0);
 			}
 		}
 
-		public FormsCheckBox()
+		public NativeCheckBox()
 		{
-			TouchUpInside += OnTouchUpInside;
 			ContentMode = UIViewContentMode.Center;
 			ImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
 			HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
 			VerticalAlignment = UIControlContentVerticalAlignment.Center;
 			AdjustsImageWhenDisabled = false;
 			AdjustsImageWhenHighlighted = false;
+
+			TouchUpInside += OnTouchUpInside;
 		}
 
 		void OnTouchUpInside(object sender, EventArgs e)
@@ -85,12 +87,12 @@ namespace Xamarin.Forms.Platform.iOS
 					return;
 
 				_tintColor = value;
-				CheckBoxTintUIColor = (CheckBoxTintColor.IsDefault ? null : CheckBoxTintColor.ToUIColor());
+				CheckBoxTintUIColor = CheckBoxTintColor.IsDefault ? null : CheckBoxTintColor.ToNative();
 			}
 		}
 
-		UIColor _checkBoxTintUIColor;
-		UIColor CheckBoxTintUIColor
+		UIColor? _checkBoxTintUIColor;
+		UIColor? CheckBoxTintUIColor
 		{
 			get
 			{
@@ -124,7 +126,7 @@ namespace Xamarin.Forms.Platform.iOS
 				bool changed = base.Enabled != value;
 				base.Enabled = value;
 
-				if(changed)
+				if (changed)
 					UpdateDisplay();
 			}
 		}
@@ -141,19 +143,13 @@ namespace Xamarin.Forms.Platform.iOS
 				return CreateCheckBox(null).ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
 			}
 
-			if (_checked == null)
-				_checked = CreateCheckBox(CreateCheckMark()).ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+			if (Checked == null)
+				Checked = CreateCheckBox(CreateCheckMark()).ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
 
-			if (_unchecked == null)
-				_unchecked = CreateCheckBox(null).ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+			if (Unchecked == null)
+				Unchecked = CreateCheckBox(null).ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
 
-			return IsChecked ? _checked : _unchecked;
-		}
-
-		internal void UpdateDisplay()
-		{
-			SetImage(GetCheckBoximage(), UIControlState.Normal);
-			SetNeedsDisplay();
+			return IsChecked ? Checked : Unchecked;
 		}
 
 		internal virtual UIBezierPath CreateBoxPath(CGRect backgroundRect) => UIBezierPath.FromOval(backgroundRect);
@@ -171,23 +167,27 @@ namespace Xamarin.Forms.Platform.iOS
 			path.AddLineTo(new CGPoint(0.15f, 0.42f));
 		}
 
-		internal virtual UIImage CreateCheckBox(UIImage check)
+		internal virtual UIImage CreateCheckBox(UIImage? check)
 		{
-			UIGraphics.BeginImageContextWithOptions(new CGSize(_defaultSize, _defaultSize), false, 0);
+			UIGraphics.BeginImageContextWithOptions(new CGSize(DefaultSize, DefaultSize), false, 0);
 			var context = UIGraphics.GetCurrentContext();
 			context.SaveState();
 
 			var checkedColor = CheckBoxTintUIColor;
-			checkedColor.SetFill();
-			checkedColor.SetStroke();
 
-			var vPadding = _lineWidth / 2;
-			var hPadding = _lineWidth / 2;
-			var diameter = _defaultSize - _lineWidth;
+			if (checkedColor != null)
+			{
+				checkedColor.SetFill();
+				checkedColor.SetStroke();
+			}
+
+			var vPadding = LineWidth / 2;
+			var hPadding = LineWidth / 2;
+			var diameter = DefaultSize - LineWidth;
 
 			var backgroundRect = new CGRect(hPadding, vPadding, diameter, diameter);
 			var boxPath = CreateBoxPath(backgroundRect);
-			boxPath.LineWidth = _lineWidth;
+			boxPath.LineWidth = LineWidth;
 			boxPath.Stroke();
 
 			if (check != null)
@@ -203,16 +203,15 @@ namespace Xamarin.Forms.Platform.iOS
 			return img;
 		}
 
-
 		internal UIImage CreateCheckMark()
 		{
-			UIGraphics.BeginImageContextWithOptions(new CGSize(_defaultSize, _defaultSize), false, 0);
+			UIGraphics.BeginImageContextWithOptions(new CGSize(DefaultSize, DefaultSize), false, 0);
 			var context = UIGraphics.GetCurrentContext();
 			context.SaveState();
 
-			var vPadding = _lineWidth / 2;
-			var hPadding = _lineWidth / 2;
-			var diameter = _defaultSize - _lineWidth;
+			var vPadding = LineWidth / 2;
+			var hPadding = LineWidth / 2;
+			var diameter = DefaultSize - LineWidth;
 
 			var checkPath = CreateCheckPath();
 
@@ -229,16 +228,38 @@ namespace Xamarin.Forms.Platform.iOS
 			return img;
 		}
 
+		public override CGSize SizeThatFits(CGSize size)
+		{
+			var result = base.SizeThatFits(size);
+			var height = Math.Max(MinimumViewSize, result.Height);
+			var width = Math.Max(MinimumViewSize, result.Width);
+			var final = Math.Min(width, height);
+
+			return new CGSize(final, final);
+		}
+
+		public override void LayoutSubviews()
+		{
+			base.LayoutSubviews();
+			UpdateDisplay();
+		}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (_disposed)
 				return;
 
 			_disposed = true;
-			if(disposing)
+			if (disposing)
 				TouchUpInside -= OnTouchUpInside;
 
 			base.Dispose(disposing);
+		}
+
+		void UpdateDisplay()
+		{
+			SetImage(GetCheckBoximage(), UIControlState.Normal);
+			SetNeedsDisplay();
 		}
 	}
 }

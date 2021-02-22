@@ -1,5 +1,6 @@
 ﻿using System;
 using Foundation;
+using Xamarin.Platform;
 
 namespace Xamarin.Forms.Platform.iOS
 {
@@ -10,7 +11,7 @@ namespace Xamarin.Forms.Platform.iOS
 		{
 		}
 
-
+		[PortHandler]
         protected override FormsCheckBox CreateNativeControl()
         {
             return new FormsCheckBox();
