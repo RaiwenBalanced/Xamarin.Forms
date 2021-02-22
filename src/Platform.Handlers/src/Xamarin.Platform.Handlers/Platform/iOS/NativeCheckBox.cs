@@ -45,10 +45,10 @@ namespace Xamarin.Platform
 			TouchUpInside += OnTouchUpInside;
 		}
 
-		void OnTouchUpInside(object sender, EventArgs e)
+		void OnTouchUpInside(object? sender, EventArgs e)
 		{
 			IsChecked = !IsChecked;
-			CheckedChanged?.Invoke(this, null);
+			CheckedChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		public bool IsChecked

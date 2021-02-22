@@ -64,11 +64,10 @@ namespace Xamarin.Platform.Handlers
 			return size;
 		}
 
-		void OnCheckedChanged(object sender, EventArgs e)
+		void OnCheckedChanged(object? sender, EventArgs e)
 		{
-			if (VirtualView != null)
+			if (sender is NativeCheckBox nativeView && VirtualView != null)
 			{
-				var nativeView = (NativeCheckBox)sender;
 				VirtualView.IsChecked = nativeView.IsChecked;
 			}
 		}
