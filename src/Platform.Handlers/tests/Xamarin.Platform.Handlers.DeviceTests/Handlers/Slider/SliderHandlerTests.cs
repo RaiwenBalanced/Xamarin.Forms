@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading.Tasks;
 using Xamarin.Platform.Handlers.DeviceTests.Stubs;
 using Xunit;
