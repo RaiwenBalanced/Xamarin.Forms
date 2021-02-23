@@ -900,6 +900,15 @@ Task("Android100")
     });
 
 
+Task("VS-MAUI")
+    .IsDependentOn("Clean")
+    .Does((ctx) =>
+    {
+        DotNetCoreRestore("Maui.sln");
+        DotNetCoreBuild("Maui.sln");
+        StartVisualStudio(ctx, "Maui.sln");
+    });
+
 Task("VS")
     .Description("Builds projects necessary so solution compiles on VS")
     .IsDependentOn("VSMAC")
