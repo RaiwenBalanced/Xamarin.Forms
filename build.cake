@@ -903,16 +903,7 @@ Task("Android100")
 Task("VS")
     .Description("Builds projects necessary so solution compiles on VS")
     .IsDependentOn("VSMAC")
-    .IsDependentOn("VSWINDOWS")
-    .Does((ctx) =>
-    { 
-        MSBuild("Xamarin.Forms.sln",
-                GetMSBuildSettings()
-                    .WithRestore()
-                    .WithProperty("AndroidTargetFrameworks", "MonoAndroid10.0"));
-
-        StartVisualStudio(ctx);
-    });
+    .IsDependentOn("VSWINDOWS");
 
 
 Task("VSWINDOWS")
@@ -921,6 +912,11 @@ Task("VSWINDOWS")
     .IsDependentOn("Clean")
     .Does((ctx) =>
     {
+
+        MSBuild("Xamarin.Forms.sln",
+                GetMSBuildSettings()
+                    .WithRestore());
+
         StartVisualStudio(ctx);
     });
 
@@ -930,6 +926,11 @@ Task("VSMAC")
     .IsDependentOn("Clean")
     .Does((ctx) =>
     {
+
+        MSBuild("Xamarin.Forms.sln",
+                GetMSBuildSettings()
+                    .WithRestore());
+                    
         StartVisualStudio(ctx);
     });
     
