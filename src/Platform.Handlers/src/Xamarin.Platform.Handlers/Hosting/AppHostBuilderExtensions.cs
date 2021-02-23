@@ -36,7 +36,7 @@ namespace Xamarin.Platform.Hosting
 				{  typeof(ILabel), typeof(LabelHandler) },
 				{  typeof(ISlider), typeof(SliderHandler) },
 				{  typeof(ISwitch), typeof(SwitchHandler) },
-				{  typeof(IEntry), typeof(EntryPointNotFoundException) }
+				{  typeof(IEntry), typeof(EntryHandler) }
 			});
 			return builder;
 		}
