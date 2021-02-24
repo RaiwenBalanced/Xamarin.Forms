@@ -945,7 +945,7 @@ Task("VSMAC")
 
         MSBuild("src/Forms/samples/Maui.Controls.Sample.iOS/Maui.Controls.Sample.iOS.csproj",
                 GetMSBuildSettings()
-                    .WithProperty("iOSPlatform", "iPhoneSimulator")
+                    .WithProperty("Platform", "iPhoneSimulator")
                     .WithRestore());
 
         MSBuild("src/Essentials/src/Xamarin.Essentials/Xamarin.Essentials.csproj",
