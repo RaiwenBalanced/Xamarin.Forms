@@ -911,6 +911,7 @@ Task("VS-MAUI")
 
 Task("VS")
     .Description("Builds projects necessary so solution compiles on VS")
+    .IsDependentOn("Clean")
     .IsDependentOn("VSMAC")
     .IsDependentOn("VSWINDOWS");
 
@@ -918,7 +919,6 @@ Task("VS")
 Task("VSWINDOWS")
     .Description("Builds projects necessary so solution compiles on VS Windows")
     .WithCriteria(IsRunningOnWindows())
-    .IsDependentOn("Clean")
     .Does((ctx) =>
     {
         MSBuild("Xamarin.Forms.sln",
@@ -931,12 +931,24 @@ Task("VSWINDOWS")
 Task("VSMAC")
     .Description("Builds projects necessary so solution compiles on VSMAC")
     .WithCriteria(!IsRunningOnWindows())
-    .IsDependentOn("Clean")
     .IsDependentOn("BuildTasks")
     .Does((ctx) =>
     {
 
-        MSBuild("Xamarin.Forms.sln",
+        MSBuild("src/Platform.Handlers/src/Xamarin.Platform.Handlers/Xamarin.Platform.Handlers.csproj",
+                GetMSBuildSettings()
+                    .WithRestore());
+
+        MSBuild("src/Forms/samples/Maui.Controls.Sample.Droid/Maui.Controls.Sample.Droid.csproj",
+                GetMSBuildSettings()
+                    .WithRestore());
+
+        MSBuild("src/Forms/samples/Maui.Controls.Sample.iOS/Maui.Controls.Sample.iOS.csproj",
+                GetMSBuildSettings()
+                    .WithProperty("iOSPlatform", "iPhoneSimulator")
+                    .WithRestore());
+
+        MSBuild("src/Essentials/src/Xamarin.Essentials/Xamarin.Essentials.csproj",
                 GetMSBuildSettings()
                     .WithRestore());
                     
