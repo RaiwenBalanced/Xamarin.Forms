@@ -250,6 +250,7 @@ namespace Xamarin.Forms.Platform.MacOS
 				_perfectSizeValid = false;
 		}
 
+		[PortHandler]
 		void UpdateTextDecorations()
 		{
 			if (IsElementOrControlEmpty)

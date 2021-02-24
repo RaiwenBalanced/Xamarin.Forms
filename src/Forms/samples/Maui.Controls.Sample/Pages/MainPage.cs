@@ -9,10 +9,12 @@ namespace Maui.Controls.Sample.Pages
 	public class MainPage : ContentPage, IPage
 	{
 		MainPageViewModel _viewModel;
+
 		public MainPage() : this(App.Current.Services.GetService<MainPageViewModel>())
 		{
 
 		}
+
 		public MainPage(MainPageViewModel viewModel)
 		{
 			BindingContext = _viewModel = viewModel;
@@ -24,6 +26,9 @@ namespace Maui.Controls.Sample.Pages
 			label.Margin = new Thickness(15, 10, 20, 15);
 
 			verticalStack.Add(label);
+
+			var underlineLabel = new Label { Text = "underline", TextDecorations = TextDecorations.Underline };
+			verticalStack.Add(underlineLabel);
 
 			var button = new Button() { Text = _viewModel.Text, WidthRequest = 200 };
 			var button2 = new Button()
