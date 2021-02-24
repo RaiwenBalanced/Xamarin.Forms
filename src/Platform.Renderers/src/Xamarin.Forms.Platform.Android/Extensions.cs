@@ -1,6 +1,7 @@
 ﻿using Android.Content.Res;
 using Android.Views;
 using Xamarin.Forms.Internals;
+using Xamarin.Platform;
 
 namespace Xamarin.Forms.Platform.Android
 {
@@ -42,7 +43,7 @@ namespace Xamarin.Forms.Platform.Android
 			layout.Position == Button.ButtonContentLayout.ImagePosition.Left ||
 			layout.Position == Button.ButtonContentLayout.ImagePosition.Right;
 
-
+		[PortHandler]
 		internal static float ToEm(this double pt)
 		{
 			return (float)pt * 0.0624f; //Coefficient for converting Pt to Em

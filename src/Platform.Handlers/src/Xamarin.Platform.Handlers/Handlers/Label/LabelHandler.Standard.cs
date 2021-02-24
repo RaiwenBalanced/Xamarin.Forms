@@ -8,5 +8,6 @@ namespace Xamarin.Platform.Handlers
 
 		public static void MapText(IViewHandler handler, ILabel label) { }
 		public static void MapTextColor(IViewHandler handler, ILabel label) { }
+		public static void MapCharacterSpacing(IViewHandler handler, ILabel label) { }
 	}
 }

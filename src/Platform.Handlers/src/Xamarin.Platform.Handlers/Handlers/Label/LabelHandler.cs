@@ -6,6 +6,7 @@
 		{
 			[nameof(ILabel.TextColor)] = MapTextColor,
 			[nameof(ILabel.Text)] = MapText,
+			[nameof(IText.CharacterSpacing)] = MapCharacterSpacing
 		};
 
 		public LabelHandler() : base(LabelMapper)

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Platform.Handlers.DeviceTests.Stubs;
-using Xunit;
 
 namespace Xamarin.Platform.Handlers.DeviceTests
 {

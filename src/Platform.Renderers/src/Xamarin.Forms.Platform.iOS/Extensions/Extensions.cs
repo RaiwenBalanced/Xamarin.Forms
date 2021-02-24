@@ -2,6 +2,7 @@ using Foundation;
 using System;
 using UIKit;
 using Xamarin.Forms.Internals;
+using Xamarin.Platform;
 
 namespace Xamarin.Forms.Platform.iOS
 {
@@ -148,6 +149,7 @@ namespace Xamarin.Forms.Platform.iOS
 			}
 		}
 
+		[PortHandler]
 		internal static NSMutableAttributedString AddCharacterSpacing(this NSAttributedString attributedString, string text, double characterSpacing)
 		{
 			if (attributedString == null && characterSpacing == 0)
@@ -173,6 +175,7 @@ namespace Xamarin.Forms.Platform.iOS
 			return mutableAttributedString;
 		}
 
+		[PortHandler]
 		internal static bool HasCharacterAdjustment(this NSMutableAttributedString mutableAttributedString)
 		{
 			if (mutableAttributedString == null)
@@ -188,6 +191,7 @@ namespace Xamarin.Forms.Platform.iOS
 			return false;
 		}
 
+		[PortHandler]
 		internal static void AddKerningAdjustment(NSMutableAttributedString mutableAttributedString, string text, double characterSpacing)
 		{
 			if (!string.IsNullOrEmpty(text))

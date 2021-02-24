@@ -23,5 +23,13 @@ namespace Xamarin.Platform
 				nativeLabel.TextColor = textColor.ToNative(textColor);
 			}
 		}
+
+		public static void UpdateCharacterSpacing(this UILabel nativeLabel, ILabel label)
+		{
+			var textAttr = nativeLabel.AttributedText?.AddCharacterSpacing(label.Text, label.CharacterSpacing);
+
+			if (textAttr != null)
+				nativeLabel.AttributedText = textAttr;
+		}
 	}
 }

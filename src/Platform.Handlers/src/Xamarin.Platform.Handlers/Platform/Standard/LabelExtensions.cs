@@ -11,5 +11,10 @@
 		{
 
 		}
+
+		public static void UpdateCharacterSpacing(this object nothing, ILabel label)
+		{
+
+		}
 	}
 }

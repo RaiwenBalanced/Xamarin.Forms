@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Android.Widget;
 using Xamarin.Forms;
+using Xamarin.Platform.Handlers.DeviceTests.Stubs;
+using Xunit;
 
 namespace Xamarin.Platform.Handlers.DeviceTests
 {
@@ -21,6 +23,35 @@ namespace Xamarin.Platform.Handlers.DeviceTests
 			{
 				GetNativeLabel(CreateHandler(label)).AssertContainsColor(color);
 			});
+		}
+
+		float GetNativeCharacterSpacing(LabelHandler labelHandler) =>
+			GetNativeLabel(labelHandler).LetterSpacing;
+
+		[Fact(DisplayName = "[LabelHandler] CharacterSpacing Initializes Correctly")]
+		public async Task CharacterSpacingInitializesCorrectly()
+		{
+			var xplatCharacterSpacing = 4;
+
+			var labelStub = new LabelStub()
+			{
+				Text = "Test CharacterSpacing",
+				CharacterSpacing = xplatCharacterSpacing
+			};
+
+			float expectedValue = xplatCharacterSpacing * UnitExtensions.EmCoefficient;
+
+			var values = await GetValueAsync(labelStub, (handler) =>
+			{
+				return new
+				{
+					ViewValue = labelStub.CharacterSpacing,
+					NativeViewValue = GetNativeCharacterSpacing(handler)
+				};
+			});
+
+			Assert.Equal(xplatCharacterSpacing, values.ViewValue);
+			Assert.Equal(expectedValue, values.NativeViewValue);
 		}
 	}
 }
