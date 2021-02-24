@@ -1205,7 +1205,7 @@ void StartVisualStudio(ICakeContext context, string sln = "Xamarin.Forms.sln")
             {
                 Arguments = new ProcessArgumentBuilder()
                     .Append("start")
-                    .Append("Xamarin.Forms.sln")
+                    .Append(sln)
             });
     }
     else
