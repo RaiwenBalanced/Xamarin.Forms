@@ -921,7 +921,6 @@ Task("VSWINDOWS")
     .IsDependentOn("Clean")
     .Does((ctx) =>
     {
-
         MSBuild("Xamarin.Forms.sln",
                 GetMSBuildSettings()
                     .WithRestore());
@@ -933,6 +932,7 @@ Task("VSMAC")
     .Description("Builds projects necessary so solution compiles on VSMAC")
     .WithCriteria(!IsRunningOnWindows())
     .IsDependentOn("Clean")
+    .IsDependentOn("BuildTasks")
     .Does((ctx) =>
     {
 
