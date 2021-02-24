@@ -6,6 +6,8 @@
 		{
 			[nameof(ILabel.TextColor)] = MapTextColor,
 			[nameof(ILabel.Text)] = MapText,
+			[nameof(ILabel.LineBreakMode)] = MapLineBreakMode,
+			[nameof(ILabel.MaxLines)] = MapMaxLines
 		};
 
 		public LabelHandler() : base(LabelMapper)

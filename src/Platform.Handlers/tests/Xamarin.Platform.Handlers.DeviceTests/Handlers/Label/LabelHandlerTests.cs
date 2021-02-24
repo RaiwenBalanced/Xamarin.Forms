@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Platform.Handlers.DeviceTests.Stubs;
-using Xunit;
 
 namespace Xamarin.Platform.Handlers.DeviceTests
 {
@@ -40,6 +39,18 @@ namespace Xamarin.Platform.Handlers.DeviceTests
 			};
 
 			await ValidatePropertyInitValue(label, () => label.TextColor, GetNativeTextColor, label.TextColor);
+		}
+
+		[Fact]
+		public async Task MaxLinesInitializesCorrectly()
+		{
+			var label = new LabelStub()
+			{
+				Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+				MaxLines = 2
+			};
+
+			await ValidatePropertyInitValue(label, () => label.MaxLines, GetNativeMaxLines, label.MaxLines);
 		}
 	}
 }

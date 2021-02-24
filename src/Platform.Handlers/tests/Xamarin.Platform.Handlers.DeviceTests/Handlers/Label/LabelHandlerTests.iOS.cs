@@ -22,5 +22,8 @@ namespace Xamarin.Platform.Handlers.DeviceTests
 				GetNativeLabel(CreateHandler(label)).AssertContainsColor(color);
 			});
 		}
+
+		int GetNativeMaxLines(LabelHandler labelHandler) =>
+			(int)GetNativeLabel(labelHandler).Lines;
 	}
 }
