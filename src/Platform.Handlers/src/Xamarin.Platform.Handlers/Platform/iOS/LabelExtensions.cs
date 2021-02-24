@@ -26,6 +26,9 @@ namespace Xamarin.Platform
 
 		public static void UpdateCharacterSpacing(this UILabel nativeLabel, ILabel label)
 		{
+			if (string.IsNullOrEmpty(label.Text))
+				return;
+
 			var textAttr = nativeLabel.AttributedText?.AddCharacterSpacing(label.Text, label.CharacterSpacing);
 
 			if (textAttr != null)

@@ -7,6 +7,7 @@ using Android.Text;
 using Android.Util;
 using Android.Views;
 using AndroidX.Core.View;
+using Xamarin.Platform;
 using AView = Android.Views.View;
 
 namespace Xamarin.Forms.Platform.Android.FastRenderers
@@ -355,6 +356,7 @@ namespace Xamarin.Forms.Platform.Android.FastRenderers
 			_lastSizeRequest = null;
 		}
 
+		[PortHandler]
 		void UpdateCharacterSpacing()
 		{
 			if (Forms.IsLollipopOrNewer)

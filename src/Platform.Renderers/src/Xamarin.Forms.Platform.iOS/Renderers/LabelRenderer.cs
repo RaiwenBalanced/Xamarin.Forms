@@ -403,6 +403,7 @@ namespace Xamarin.Forms.Platform.MacOS
 #endif
 		}
 
+		[PortHandler]
 		void UpdateCharacterSpacing()
 		{
 			if (IsElementOrControlEmpty)
